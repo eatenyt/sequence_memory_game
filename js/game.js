@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.back-btn').forEach(btn => {
         btn.addEventListener('click', backToHome);
     });
+    
+    // 初始化音频
+    if (window.GameAudio) {
+        window.GameAudio.init();
+    }
 });
 
 class SequenceGame {
@@ -68,6 +73,25 @@ class SequenceGame {
         
         // 显示主页
         this.showPage('homePage');
+        
+        // 添加音乐控制按钮
+        this.addMusicButton();
+    }
+    
+    // 添加音乐控制按钮
+    addMusicButton() {
+        if (!document.getElementById('musicToggleBtn')) {
+            const musicBtn = document.createElement('button');
+            musicBtn.id = 'musicToggleBtn';
+            musicBtn.textContent = '🔇';
+            musicBtn.className = 'music-btn';
+            musicBtn.addEventListener('click', () => {
+                if (window.GameAudio) {
+                    window.GameAudio.toggleMusic();
+                }
+            });
+            document.body.appendChild(musicBtn);
+        }
     }
 
     // 显示指定页面
@@ -101,7 +125,6 @@ class SequenceGame {
         document.getElementById('timer').textContent = '60';
         document.getElementById('score').textContent = '0';
         document.getElementById('streak').textContent = '0';
-        document.getElementById('accuracy').textContent = '0%';
         
         // 启用开始按钮
         const startButton = document.getElementById('startButton');
@@ -231,6 +254,11 @@ class SequenceGame {
         this.showFeedback(number, isCorrect);
 
         if (!isCorrect) {
+            // 播放错误音效
+            if (window.GameAudio) {
+                window.GameAudio.playWrong();
+            }
+            
             // 如果点击错误，重置连击并开始下一轮
             this.streak = 0;
             setTimeout(() => {
@@ -240,12 +268,22 @@ class SequenceGame {
             return;
         }
 
+        // 播放正确音效
+        if (window.GameAudio) {
+            window.GameAudio.playCorrect();
+        }
+        
         // 增加正确移动计数
         this.correctMoves++;
         this.updateUI();
 
         // 检查是否完成当前序列
         if (this.playerSequence.length === this.sequence.length) {
+            // 播放完成音效
+            if (window.GameAudio) {
+                window.GameAudio.playComplete();
+            }
+            
             this.streak++;
             this.score += Math.floor(GAME_CONFIG[this.currentDifficulty].baseScore * 
                 this.calculateStreakMultiplier());
@@ -362,6 +400,11 @@ class SequenceGame {
         this.timer = null;
         this.isPlaying = false;
         
+        // 播放游戏结束音效
+        if (window.GameAudio) {
+            window.GameAudio.playGameOver();
+        }
+        
         // 保存最高分
         if (this.score > this.bestScores[this.currentDifficulty]) {
             this.bestScores[this.currentDifficulty] = this.score;
@@ -401,6 +444,11 @@ class SequenceGame {
             cell.textContent === number.toString());
         
         if (cell) {
+            // 播放显示音效
+            if (window.GameAudio) {
+                window.GameAudio.playDisplay();
+            }
+            
             cell.classList.add('highlight');
             await this.sleep(GAME_CONFIG[this.currentDifficulty].displayTime);
             cell.classList.remove('highlight');

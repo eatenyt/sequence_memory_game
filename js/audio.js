@@ -4,6 +4,8 @@ let audioContext;
 let bgMusicElement = null;
 // 音频是否已初始化
 let audioInitialized = false;
+// 音效对象
+let soundEffects = {};
 
 // 初始化音频上下文
 function initAudio() {
@@ -15,10 +17,33 @@ function initAudio() {
         // 创建背景音乐元素
         createBackgroundMusicElement();
         
+        // 加载音效
+        loadSoundEffects();
+        
         // 标记音频已初始化
         audioInitialized = true;
     } catch (e) {
         console.error('Web Audio API 不受支持:', e);
+    }
+}
+
+// 加载音效
+function loadSoundEffects() {
+    // 定义音效文件
+    const effects = {
+        correct: 'audio/correct.mp3',
+        wrong: 'audio/wrong.mp3',
+        display: 'audio/display.mp3',
+        complete: 'audio/complete.mp3',
+        gameover: 'audio/gameover.mp3'
+    };
+    
+    // 加载每个音效
+    for (const [name, path] of Object.entries(effects)) {
+        const audio = new Audio(path);
+        audio.preload = 'auto';
+        soundEffects[name] = audio;
+        console.log(`加载音效: ${name} (${path})`);
     }
 }
 
@@ -78,7 +103,9 @@ function toggleBackgroundMusic() {
             bgMusicElement.play()
                 .then(() => {
                     console.log('背景音乐播放成功');
-                    document.getElementById('musicToggleBtn').textContent = '🔊';
+                    if (document.getElementById('musicToggleBtn')) {
+                        document.getElementById('musicToggleBtn').textContent = '🔊';
+                    }
                     return true;
                 })
                 .catch(error => {
@@ -86,7 +113,9 @@ function toggleBackgroundMusic() {
                     // 在用户交互时重新尝试播放
                     document.addEventListener('click', function tryPlay() {
                         bgMusicElement.play().then(() => {
-                            document.getElementById('musicToggleBtn').textContent = '🔊';
+                            if (document.getElementById('musicToggleBtn')) {
+                                document.getElementById('musicToggleBtn').textContent = '🔊';
+                            }
                             document.removeEventListener('click', tryPlay);
                         }).catch(e => console.error('重试播放失败:', e));
                     });
@@ -95,7 +124,9 @@ function toggleBackgroundMusic() {
         } else {
             // 暂停音乐
             bgMusicElement.pause();
-            document.getElementById('musicToggleBtn').textContent = '🔇';
+            if (document.getElementById('musicToggleBtn')) {
+                document.getElementById('musicToggleBtn').textContent = '🔇';
+            }
             console.log('背景音乐已暂停');
             return false;
         }
@@ -107,139 +138,48 @@ function toggleBackgroundMusic() {
     return bgMusicElement.paused ? false : true;
 }
 
-// 生成点击成功音效
+// 播放音效
+function playSound(name) {
+    if (!audioInitialized) {
+        initAudio();
+    }
+    
+    const sound = soundEffects[name];
+    if (sound) {
+        // 重置音频到开始位置
+        sound.currentTime = 0;
+        // 播放音效
+        sound.play().catch(error => {
+            console.error(`播放音效 ${name} 失败:`, error);
+        });
+    } else {
+        console.error(`找不到音效: ${name}`);
+    }
+}
+
+// 播放点击成功音效
 function playCorrectSound() {
-    if (!audioContext) return;
-    
-    // 创建振荡器和增益节点
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // 配置振荡器
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(880, audioContext.currentTime); // A5
-    oscillator.frequency.exponentialRampToValueAtTime(1760, audioContext.currentTime + 0.2); // A6
-    
-    // 配置增益节点（音量）
-    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-    
-    // 连接节点
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    // 播放音效
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.3);
+    playSound('correct');
 }
 
-// 生成点击错误音效
+// 播放点击错误音效
 function playWrongSound() {
-    if (!audioContext) return;
-    
-    // 创建振荡器和增益节点
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // 配置振荡器
-    oscillator.type = 'sawtooth';
-    oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // A3
-    oscillator.frequency.exponentialRampToValueAtTime(110, audioContext.currentTime + 0.3); // A2
-    
-    // 配置增益节点（音量）
-    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-    
-    // 连接节点
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    // 播放音效
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.3);
+    playSound('wrong');
 }
 
-// 生成数字显示音效
+// 播放数字显示音效
 function playDisplaySound() {
-    if (!audioContext) return;
-    
-    // 创建振荡器和增益节点
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // 配置振荡器
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(660, audioContext.currentTime); // E5
-    
-    // 配置增益节点（音量）
-    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-    
-    // 连接节点
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    // 播放音效
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.1);
+    playSound('display');
 }
 
-// 生成完成音效
+// 播放完成音效
 function playCompleteSound() {
-    if (!audioContext) return;
-    
-    // 创建振荡器和增益节点
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // 配置振荡器
-    oscillator.type = 'sine';
-    
-    // 创建音阶 C G C'（C大三和弦）
-    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-    oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.1); // G5
-    oscillator.frequency.setValueAtTime(1046.50, audioContext.currentTime + 0.2); // C6
-    
-    // 配置增益节点（音量）
-    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-    
-    // 连接节点
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    // 播放音效
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.5);
+    playSound('complete');
 }
 
-// 生成游戏结束音效
+// 播放游戏结束音效
 function playGameOverSound() {
-    if (!audioContext) return;
-    
-    // 创建振荡器和增益节点
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // 配置振荡器
-    oscillator.type = 'triangle';
-    
-    // 创建下降音阶
-    oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4
-    oscillator.frequency.exponentialRampToValueAtTime(220, audioContext.currentTime + 0.3); // A3
-    oscillator.frequency.exponentialRampToValueAtTime(110, audioContext.currentTime + 0.6); // A2
-    
-    // 配置增益节点（音量）
-    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.7);
-    
-    // 连接节点
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    // 播放音效
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.7);
+    playSound('gameover');
 }
 
 // 导出函数

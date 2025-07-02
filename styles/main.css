@@ -50,6 +50,24 @@ button:hover {
     background-color: #3A80D2;
 }
 
+/* 音乐按钮 */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-size: 20px;
+    background-color: rgba(74, 144, 226, 0.8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
 /* 游戏网格 */
 #gameGrid {
     display: grid;
@@ -113,6 +131,37 @@ strong {
     color: #4A90E2;
 }
 
+/* Logo网格 */
+.logo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 300px;
+}
+
+.logo-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo-cell:nth-child(odd) {
+    background-color: #4caf50;
+    color: white;
+}
+
+.logo-cell:nth-child(even) {
+    background-color: #4a90e2;
+    color: white;
+}
+
 /* 响应式设计 */
 @media (max-width: 600px) {
     button {
@@ -124,5 +173,19 @@ strong {
         width: 50px;
         height: 50px;
         font-size: 20px;
+    }
+    
+    .logo-cell {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .music-btn {
+        bottom: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
     }
 } 
