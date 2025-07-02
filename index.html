@@ -22,37 +22,38 @@
             <div class="logo-cell">6</div>
         </div>
         
-        <p>选择难度</p>
-        <div>
-            <button id="easyButton">👶 简单模式</button>
-            <button id="mediumButton">👤 一般模式</button>
-            <button id="hardButton">👑 困难模式</button>
-            <button id="instructionsButton">❓ 游戏说明</button>
+        <p class="difficulty-title">选择难度</p>
+        
+        <div class="button-container">
+            <button id="easyButton" class="difficulty-btn">👶 简单模式</button>
+            <button id="mediumButton" class="difficulty-btn">👤 一般模式</button>
+            <button id="hardButton" class="difficulty-btn">👑 困难模式</button>
+            <button id="instructionsButton" class="instruction-btn">❓ 游戏说明</button>
         </div>
     </div>
 
     <!-- 游戏页面 -->
     <div id="gamePage" style="display: none;">
-        <button onclick="backToHome()">返回首页</button>
+        <button onclick="backToHome()" class="back-btn">返回首页</button>
         <h1>序列记忆游戏</h1>
-        <div>
+        <div class="game-stats">
             <span>得分: <span id="score">0</span></span>
             <span>连击: <span id="streak">0</span></span>
             <span>时间: <span id="timer">60</span>秒</span>
         </div>
-        <div>
+        <div class="game-container">
             <div id="gameGrid"></div>
             <div>
-                <button id="startButton">开始游戏</button>
+                <button id="startButton" class="start-btn">开始游戏</button>
             </div>
         </div>
     </div>
 
     <!-- 游戏说明页面 -->
     <div id="instructionsPage" style="display: none;">
-        <button onclick="backToHome()">返回首页</button>
+        <button onclick="backToHome()" class="back-btn">返回首页</button>
         <h1>游戏说明</h1>
-        <div>
+        <div class="instructions-content">
             <h2>怎么玩？</h2>
             <ul>
                 <li>游戏会依次<strong>点亮</strong>一组数字，请记住它们的<strong>顺序</strong></li>
