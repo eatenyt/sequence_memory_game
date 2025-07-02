@@ -228,7 +228,10 @@ class SequenceGame {
                 icon: 'success',
                 confirmButtonText: '继续'
             }).then(() => {
-                this.startGame();
+                this.isPlaying = false;
+                this.playerSequence = [];
+                document.getElementById('startButton').disabled = false;
+                this.updateUI();
             });
         }
     }
