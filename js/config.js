@@ -1,47 +1,30 @@
 const GAME_CONFIG = {
     easy: {
-        sequenceLength: 6,
+        sequenceLength: 4,
         displayTime: 1500, // 毫秒
         numberRange: { min: 1, max: 6 },
         gridSize: { rows: 2, cols: 3 },
         baseScore: 5,
         streakMultiplier: 1.2,
-        perfectBonus: 30,
-        penaltyScore: 3,
-        maxHints: 3,
-        lives: 5
+        gameTime: 60 // 秒
     },
     medium: {
-        sequenceLength: 9,
+        sequenceLength: 6,
         displayTime: 1000,
         numberRange: { min: 1, max: 9 },
         gridSize: { rows: 3, cols: 3 },
         baseScore: 10,
         streakMultiplier: 1.5,
-        perfectBonus: 50,
-        penaltyScore: 5,
-        maxHints: 3,
-        lives: 3,
-        effects: {
-            shake: true
-        }
+        gameTime: 60
     },
     hard: {
-        sequenceLength: 12,
+        sequenceLength: 9,
         displayTime: 800,
         numberRange: { min: 1, max: 9 },
         gridSize: { rows: 3, cols: 3 },
         baseScore: 15,
         streakMultiplier: 2.0,
-        perfectBonus: 100,
-        penaltyScore: 10,
-        maxHints: 3,
-        lives: 1,
-        effects: {
-            shake: true,
-            flash: true,
-            randomize: true
-        }
+        gameTime: 60
     }
 };
 
@@ -57,7 +40,5 @@ const SOUND_CONFIG = {
 // 动画配置
 const ANIMATION_CONFIG = {
     highlightDuration: 300,
-    transitionDuration: 300,
-    shakeIntensity: 3,
-    flashDuration: 100
+    transitionDuration: 300
 }; 

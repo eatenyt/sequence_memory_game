@@ -24,18 +24,52 @@ body {
     align-items: center;
 }
 
-.game-container {
+/* 通用容器样式 */
+.home-container,
+.game-container,
+.instructions-container {
     background: white;
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     width: 90%;
+    position: relative;
 }
 
+/* 首页样式 */
+.home-container {
+    text-align: center;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.menu-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* 游戏页面样式 */
 header {
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
 }
 
 h1 {
@@ -48,6 +82,32 @@ h1 {
     justify-content: space-around;
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
+}
+
+/* 页面按钮容器 */
+.page-buttons {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.back-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--text-color);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
 .game-board {
@@ -99,35 +159,36 @@ h1 {
 }
 
 .number-cell {
-    width: var(--grid-size);
-    height: var(--grid-size);
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--background-color);
-    border-radius: 0.5rem;
-    font-size: 1.5rem;
+    width: 60px;
+    height: 60px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
+    user-select: none;
 }
 
 .number-cell:hover {
-    transform: scale(1.05);
+    background-color: #e0e0e0;
 }
 
 .number-cell.highlight {
-    background-color: var(--primary-color);
+    background-color: #4a90e2;
     color: white;
 }
 
 .number-cell.correct {
-    background-color: var(--success-color);
+    background-color: #4caf50;
     color: white;
 }
 
 .number-cell.wrong {
-    background-color: var(--error-color);
+    background-color: #f44336;
     color: white;
 }
 
@@ -165,13 +226,47 @@ h1 {
     border-top: 1px solid #eee;
 }
 
-@media (max-width: 600px) {
-    .game-container {
-        padding: 1rem;
-    }
+/* 游戏说明页面样式 */
+.instructions-container {
+    text-align: left;
+}
 
-    .difficulty-selector {
-        flex-direction: column;
+.instructions-content {
+    margin: 2rem 0;
+}
+
+.instructions-content h2 {
+    color: var(--primary-color);
+    margin: 1.5rem 0 1rem;
+}
+
+.instructions-content ul {
+    list-style-position: inside;
+    margin-left: 1rem;
+}
+
+.instructions-content li {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+/* 游戏说明页面的按钮容器 */
+.instructions-buttons {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.instructions-buttons .back-btn {
+    position: static;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+    .home-container,
+    .game-container,
+    .instructions-container {
+        padding: 1rem;
     }
 
     .game-info {
@@ -182,4 +277,25 @@ h1 {
     :root {
         --grid-size: 60px;
     }
+
+    .back-btn {
+        position: static;
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .difficulty-selector {
+        flex-direction: column;
+    }
+}
+
+#gameGrid.disabled {
+    pointer-events: none;
+}
+
+#gameGrid {
+    display: grid;
+    grid-gap: 10px;
+    margin: 20px auto;
+    max-width: 400px;
 } 
