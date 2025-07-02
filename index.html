@@ -6,16 +6,35 @@
     <title>序列记忆游戏</title>
     <link rel="stylesheet" href="styles/main.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <!-- 首页 -->
     <div class="home-container" id="homePage">
-        <h1>序列记忆游戏</h1>
+        <div class="home-header">
+            <h1>序列记忆游戏</h1>
+            <p class="tagline">挑战你的记忆力极限</p>
+        </div>
+        
+        <div class="game-logo">
+            <div class="logo-grid">
+                <div class="logo-cell">1</div>
+                <div class="logo-cell">3</div>
+                <div class="logo-cell">5</div>
+                <div class="logo-cell">2</div>
+                <div class="logo-cell">4</div>
+                <div class="logo-cell">6</div>
+            </div>
+        </div>
+        
         <div class="menu-buttons">
-            <button class="menu-btn" id="easyButton">简单模式</button>
-            <button class="menu-btn" id="mediumButton">一般模式</button>
-            <button class="menu-btn" id="hardButton">困难模式</button>
-            <button class="menu-btn" id="instructionsButton">游戏说明</button>
+            <div class="difficulty-title">选择难度</div>
+            <div class="difficulty-buttons">
+                <button class="menu-btn" id="easyButton"><i class="fas fa-child"></i> 简单模式</button>
+                <button class="menu-btn" id="mediumButton"><i class="fas fa-user"></i> 一般模式</button>
+                <button class="menu-btn" id="hardButton"><i class="fas fa-crown"></i> 困难模式</button>
+            </div>
+            <button class="menu-btn info-btn" id="instructionsButton"><i class="fas fa-question-circle"></i> 游戏说明</button>
         </div>
     </div>
 
@@ -44,20 +63,21 @@
         <button class="back-btn" onclick="backToHome()">返回首页</button>
         <h1>游戏说明</h1>
         <div class="instructions-content">
-            <h2>游戏规则：</h2>
+            <h2>怎么玩？</h2>
             <ul>
-                <li>观察数字序列：数字会按特定顺序依次高亮显示</li>
-                <li>记忆并重复：按照相同顺序点击数字</li>
-                <li>计分规则：每完成一次序列获得相应分数</li>
-                <li>连击奖励：连续答对可获得额外分数</li>
-                <li>答错处理：答错会直接进入下一题</li>
-                <li>时间限制：每局游戏时间为60秒</li>
+                <li>游戏会依次<strong>点亮</strong>一组数字，请记住它们的<strong>顺序</strong></li>
+                <li>数字停止点亮后，请按照<strong>相同顺序</strong>点击这些数字</li>
+                <li>成功重复正确顺序后，将进入<strong>下一轮</strong>，序列会变得更长</li>
+                <li>每局游戏限时<strong>60秒</strong>，争取在时间内获得最高分</li>
+                <li>如果点错了，会自动进入下一轮，记住新的序列继续挑战</li>
+                <li>连续答对可以获得<strong>连击奖励</strong>，分数会更高哦</li>
             </ul>
-            <h2>难度说明：</h2>
+            
+            <h2>难度选择</h2>
             <ul>
-                <li>简单模式：4个数字，1-6范围，2×3网格</li>
-                <li>一般模式：6个数字，1-9范围，3×3网格</li>
-                <li>困难模式：9个数字，1-9范围，3×3网格</li>
+                <li><strong>简单模式</strong>：2×3网格，需记忆4个数字</li>
+                <li><strong>一般模式</strong>：3×3网格，需记忆6个数字</li>
+                <li><strong>困难模式</strong>：3×3网格，需记忆9个数字</li>
             </ul>
         </div>
     </div>

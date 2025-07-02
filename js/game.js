@@ -1,5 +1,5 @@
 // 全局游戏实例
-let game;
+let game = null;
 
 // 全局函数 - 必须定义在window对象上才能从HTML中直接调用
 window.startGame = function(difficulty) {
@@ -18,7 +18,14 @@ window.backToHome = function() {
 // 当文档加载完成时初始化游戏
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM加载完成，初始化游戏");
+    
+    // 创建游戏实例
     game = new SequenceGame();
+    
+    // 确保按钮在全局可访问
+    window.startGame = () => game.startGame();
+    window.showInstructions = () => game.showInstructions();
+    window.backToHome = () => game.backToHome();
     
     // 添加全局事件监听器
     document.querySelectorAll('.back-btn').forEach(btn => {
@@ -38,6 +45,7 @@ class SequenceGame {
         this.totalMoves = 0;
         this.timer = null;
         this.timeLeft = 0;
+        this.round = 1;
         
         // 最佳记录
         this.bestScores = {
@@ -56,18 +64,10 @@ class SequenceGame {
         document.getElementById('easyButton').addEventListener('click', () => this.startGame('easy'));
         document.getElementById('mediumButton').addEventListener('click', () => this.startGame('medium'));
         document.getElementById('hardButton').addEventListener('click', () => this.startGame('hard'));
-        document.getElementById('startButton').addEventListener('click', () => this.startRound());
         document.getElementById('instructionsButton').addEventListener('click', () => this.showInstructions());
         
         // 显示主页
         this.showPage('homePage');
-    }
-
-    // 设置事件监听
-    setupEventListeners() {
-        document.getElementById('startButton').addEventListener('click', () => {
-            this.startRound();
-        });
     }
 
     // 显示指定页面
@@ -111,46 +111,26 @@ class SequenceGame {
     }
 
     // 开始游戏
-    startGame(difficulty) {
+    startGame(difficulty = 'easy') {
         this.currentDifficulty = difficulty;
         this.score = 0;
         this.streak = 0;
-        this.correctMoves = 0;
-        this.totalMoves = 0;
+        this.round = 1;
         this.isPlaying = false;
-        this.sequence = [];
-        this.playerSequence = [];
-        
-        // 更新显示
         this.updateUI();
         
-        // 设置网格
+        // 设置游戏网格
         this.setupGrid();
         
         // 显示游戏页面
         this.showPage('gamePage');
         
-        // 初始化计时器显示
+        // 重置计时器
         this.timeLeft = GAME_CONFIG[this.currentDifficulty].gameTime;
         this.updateTimerDisplay();
-    }
-
-    // 开始新一轮
-    async startRound() {
-        if (!this.isPlaying) {
-            this.isPlaying = true;
-            this.playerSequence = [];
-            this.generateSequence();
-            
-            // 第一轮开始时启动计时器
-            if (!this.timer) {
-                this.startTimer();
-            }
-            
-            // 隐藏开始按钮
-            document.getElementById('startButton').style.display = 'none';
-            await this.showSequence();
-        }
+        
+        // 绑定开始按钮事件
+        document.getElementById('startButton').addEventListener('click', () => this.startRound());
     }
 
     // 设置游戏网格
@@ -213,11 +193,12 @@ class SequenceGame {
         this.disableGridClicks();
         
         const config = GAME_CONFIG[this.currentDifficulty];
+        const sequenceInterval = 300; // 数字间隔时间：300ms
         
         for (let i = 0; i < this.sequence.length; i++) {
             const number = this.sequence[i];
             await this.highlightNumber(number);
-            await this.sleep(300); // 序列间隔
+            await this.sleep(sequenceInterval);
         }
         
         // 展示完毕后启用点击
@@ -429,5 +410,23 @@ class SequenceGame {
     // 等待指定时间
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // 开始新一轮
+    async startRound() {
+        if (!this.isPlaying) {
+            this.isPlaying = true;
+            this.playerSequence = [];
+            this.generateSequence();
+            
+            // 第一轮开始时启动计时器
+            if (!this.timer) {
+                this.startTimer();
+            }
+            
+            // 隐藏开始按钮
+            document.getElementById('startButton').style.display = 'none';
+            await this.showSequence();
+        }
     }
 } 

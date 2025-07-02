@@ -1,7 +1,7 @@
 const GAME_CONFIG = {
     easy: {
         sequenceLength: 4,
-        displayTime: 1500, // 毫秒
+        displayTime: 1000, // 1秒
         numberRange: { min: 1, max: 6 },
         gridSize: { rows: 2, cols: 3 },
         baseScore: 5,
@@ -10,7 +10,7 @@ const GAME_CONFIG = {
     },
     medium: {
         sequenceLength: 6,
-        displayTime: 1000,
+        displayTime: 800, // 0.8秒
         numberRange: { min: 1, max: 9 },
         gridSize: { rows: 3, cols: 3 },
         baseScore: 10,
@@ -19,7 +19,7 @@ const GAME_CONFIG = {
     },
     hard: {
         sequenceLength: 9,
-        displayTime: 800,
+        displayTime: 600, // 0.6秒
         numberRange: { min: 1, max: 9 },
         gridSize: { rows: 3, cols: 3 },
         baseScore: 15,
@@ -30,11 +30,18 @@ const GAME_CONFIG = {
 
 // 音效配置
 const SOUND_CONFIG = {
-    numberDisplay: 'path/to/sound/display.mp3',
-    correct: 'path/to/sound/correct.mp3',
-    wrong: 'path/to/sound/wrong.mp3',
-    levelComplete: 'path/to/sound/complete.mp3',
-    newRecord: 'path/to/sound/record.mp3'
+    // 数字展示音效
+    displaySound: 'audio/display.mp3',
+    // 点击成功音效
+    correctSound: 'audio/correct.mp3',
+    // 点击失败音效
+    wrongSound: 'audio/wrong.mp3',
+    // 游戏完成音效
+    completeSound: 'audio/complete.mp3',
+    // 游戏结束音效
+    gameOverSound: 'audio/gameover.mp3',
+    // 背景音乐
+    backgroundMusic: 'audio/background_piano.mp3'
 };
 
 // 动画配置
