@@ -23,6 +23,7 @@ body {
     margin: 0 auto;
     text-align: center;
     box-sizing: border-box;
+    position: relative;
 }
 
 /* 标题样式 */
@@ -87,34 +88,26 @@ button:hover {
     padding-bottom: 10px;
 }
 
-/* 返回按钮 */
+/* 返回首页按钮 */
 .back-btn {
-    margin-bottom: 15px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
+    padding: 8px 15px;
+    font-size: 14px;
 }
 
 /* 开始游戏按钮 */
-.start-btn {
-    padding: 12px 30px;
-    font-size: 18px;
+.start-btn-container {
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
 }
 
-/* 音乐按钮 */
-.music-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    font-size: 20px;
-    background-color: rgba(74, 144, 226, 0.8);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+.start-btn {
+    padding: 12px 30px;
+    font-size: 18px;
 }
 
 /* 游戏结束对话框 */
@@ -292,13 +285,5 @@ strong {
         width: 50px;
         height: 50px;
         font-size: 20px;
-    }
-    
-    .music-btn {
-        bottom: 10px;
-        right: 10px;
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
     }
 } 

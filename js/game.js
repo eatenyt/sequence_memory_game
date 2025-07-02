@@ -73,25 +73,6 @@ class SequenceGame {
         
         // 显示主页
         this.showPage('homePage');
-        
-        // 添加音乐控制按钮
-        this.addMusicButton();
-    }
-    
-    // 添加音乐控制按钮
-    addMusicButton() {
-        if (!document.getElementById('musicToggleBtn')) {
-            const musicBtn = document.createElement('button');
-            musicBtn.id = 'musicToggleBtn';
-            musicBtn.textContent = '🔇';
-            musicBtn.className = 'music-btn';
-            musicBtn.addEventListener('click', () => {
-                if (window.GameAudio) {
-                    window.GameAudio.toggleMusic();
-                }
-            });
-            document.body.appendChild(musicBtn);
-        }
     }
 
     // 显示指定页面
