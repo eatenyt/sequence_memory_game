@@ -411,29 +411,35 @@ class SequenceGame {
             this.saveBestScores();
         }
         
-        // 显示游戏结束弹窗，让用户选择
-        Swal.fire({
-            title: '游戏结束',
-            html: `
+        // 创建游戏结束对话框
+        const gameOverDialog = document.createElement('div');
+        gameOverDialog.className = 'game-over-dialog';
+        gameOverDialog.innerHTML = `
+            <div class="game-over-content">
+                <h2>游戏结束</h2>
                 <div class="game-over-stats">
                     <p>最终得分: ${this.score}</p>
                     <p>最大连击: ${this.streak}</p>
                 </div>
-            `,
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: '再玩一次',
-            cancelButtonText: '返回首页'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // 用户选择再玩一次
-                this.startGame(this.currentDifficulty);
-                // 重置开始按钮显示
-                document.getElementById('startButton').style.display = 'block';
-            } else {
-                // 用户选择返回首页
-                this.backToHome();
-            }
+                <div class="game-over-buttons">
+                    <button id="playAgainBtn">再玩一次</button>
+                    <button id="returnHomeBtn">返回首页</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(gameOverDialog);
+        
+        // 添加按钮事件
+        document.getElementById('playAgainBtn').addEventListener('click', () => {
+            document.body.removeChild(gameOverDialog);
+            this.startGame(this.currentDifficulty);
+            document.getElementById('startButton').style.display = 'block';
+        });
+        
+        document.getElementById('returnHomeBtn').addEventListener('click', () => {
+            document.body.removeChild(gameOverDialog);
+            this.backToHome();
         });
     }
 
