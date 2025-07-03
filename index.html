@@ -9,19 +9,21 @@
 <body>
     <!-- 首页 -->
     <div id="homePage">
-        <h1>序列记忆游戏</h1>
-        <p>挑战你的记忆力极限</p>
-        
-        <div class="logo-grid">
-            <div class="logo-cell">1</div>
-            <div class="logo-cell">3</div>
-            <div class="logo-cell">5</div>
-            <div class="logo-cell">2</div>
-            <div class="logo-cell">4</div>
-            <div class="logo-cell">6</div>
+        <div class="game-content">
+            <h1>序列记忆游戏</h1>
+            <p>挑战你的记忆力极限</p>
+            
+            <div class="logo-grid">
+                <div class="logo-cell">1</div>
+                <div class="logo-cell">3</div>
+                <div class="logo-cell">5</div>
+                <div class="logo-cell">2</div>
+                <div class="logo-cell">4</div>
+                <div class="logo-cell">6</div>
+            </div>
+            
+            <p class="difficulty-title">选择难度</p>
         </div>
-        
-        <p class="difficulty-title">选择难度</p>
         
         <div class="button-container">
             <button id="easyButton" class="difficulty-btn">👶 简单模式</button>
@@ -34,17 +36,17 @@
     <!-- 游戏页面 -->
     <div id="gamePage" style="display: none;">
         <button onclick="backToHome()" class="back-btn">返回首页</button>
-        <h1>序列记忆游戏</h1>
-        <div class="game-stats">
-            <span>得分: <span id="score">0</span></span>
-            <span>连击: <span id="streak">0</span></span>
-            <span>时间: <span id="timer">60</span>秒</span>
-        </div>
-        <div class="game-container">
-            <div id="gameGrid"></div>
-            <div class="start-btn-container">
-                <button id="startButton" class="start-btn">开始游戏</button>
+        <div class="game-content">
+            <h1>序列记忆游戏</h1>
+            <div class="game-stats">
+                <span>得分: <span id="score">0</span></span>
+                <span>连击: <span id="streak">0</span></span>
+                <span>时间: <span id="timer">60</span>秒</span>
             </div>
+            <div id="gameGrid"></div>
+        </div>
+        <div class="start-btn-container">
+            <button id="startButton" class="start-btn">开始游戏</button>
         </div>
     </div>
 

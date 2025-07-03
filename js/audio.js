@@ -37,7 +37,7 @@ function loadSoundEffects() {
     for (const [name, path] of Object.entries(effects)) {
         const audio = new Audio(path);
         audio.preload = 'auto';
-        audio.volume = 0.6; // 设置音量为60%
+        audio.volume = 1.0; // 设置音量为100%，与本地测试环境保持一致
         soundEffects[name] = audio;
         console.log(`加载音效: ${name} (${path})`);
     }
