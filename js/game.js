@@ -431,10 +431,7 @@ class SequenceGame {
             cell.textContent === number.toString());
         
         if (cell) {
-            // 播放显示音效
-            if (window.GameAudio) {
-                window.GameAudio.playDisplay();
-            }
+            // 移除显示音效
             
             cell.classList.add('highlight');
             await this.sleep(GAME_CONFIG[this.currentDifficulty].displayTime);
