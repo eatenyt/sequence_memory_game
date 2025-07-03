@@ -260,10 +260,7 @@ class SequenceGame {
 
         // 检查是否完成当前序列
         if (this.playerSequence.length === this.sequence.length) {
-            // 播放完成音效
-            if (window.GameAudio) {
-                window.GameAudio.playComplete();
-            }
+            // 移除完成音效
             
             this.streak++;
             this.score += Math.floor(GAME_CONFIG[this.currentDifficulty].baseScore * 
